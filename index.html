@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cash Counter Pro</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="app">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+        <div class="logo">
+            <span>💰</span>
+            <h2>Cash Counter</h2>
+        </div>
+
+        <nav>
+            <button class="nav-btn active" data-section="dashboard">
+                📊 Dashboard
+            </button>
+
+            <button class="nav-btn" data-section="counter">
+                💵 Cash Counter
+            </button>
+
+            <button class="nav-btn" data-section="transactions">
+                📋 Transactions
+            </button>
+
+            <button class="nav-btn" data-section="reports">
+                📈 Reports
+            </button>
+        </nav>
+
+        <button class="theme-btn" id="themeBtn">
+            🌙 Dark Mode
+        </button>
+    </aside>
+
+    <!-- MAIN -->
+    <main class="main">
+
+        <!-- TOPBAR -->
+        <header class="topbar">
+            <div>
+                <h1 id="pageTitle">Dashboard</h1>
+                <p id="currentDate"></p>
+            </div>
+
+            <div class="top-actions">
+                <button class="secondary-btn" id="printBtn">
+                    🖨 Print
+                </button>
+
+                <button class="secondary-btn" id="csvBtn">
+                    📥 CSV
+                </button>
+            </div>
+        </header>
+
+
+        <!-- ================= DASHBOARD ================= -->
+        <section id="dashboard" class="page-section active">
+
+            <!-- STATS -->
+            <div class="stats-grid">
+
+                <div class="stat-card">
+                    <div class="stat-icon">💰</div>
+                    <div>
+                        <p>Total Cash</p>
+                        <h2 id="dashboardTotal">₹0.00</h2>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon">💵</div>
+                    <div>
+                        <p>Notes Total</p>
+                        <h2 id="dashboardNotes">₹0.00</h2>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon">🪙</div>
+                    <div>
+                        <p>Coins Total</p>
+                        <h2 id="dashboardCoins">₹0.00</h2>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon">📦</div>
+                    <div>
+                        <p>Total Items</p>
+                        <h2 id="dashboardItems">0</h2>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <!-- CASH FLOW -->
+            <div class="card">
+
+                <div class="card-header">
+                    <div>
+                        <h2>💸 Cash Flow</h2>
+                        <p>Add money coming in or going out</p>
+                    </div>
+                </div>
+
+                <div class="form-grid">
+
+                    <div class="form-group">
+                        <label>Opening Cash</label>
+                        <input
+                            type="number"
+                            id="openingCash"
+                            min="0"
+                            placeholder="Enter opening cash"
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label>Transaction Type</label>
+                        <select id="transactionType">
+                            <option value="in">Cash In</option>
+                            <option value="out">Cash Out</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Amount</label>
+                        <input
+                            type="number"
+                            id="transactionAmount"
+                            min="0"
+                            placeholder="Enter amount"
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label>Description</label>
+                        <input
+                            type="text"
+                            id="transactionDescription"
+                            placeholder="Example: Sale / Purchase"
+                        >
+                    </div>
+
+                </div>
+
+                <div class="button-row">
+                    <button class="primary-btn" id="addTransactionBtn">
+                        + Add Transaction
+                    </button>
+
+                    <button class="danger-btn" id="resetFlowBtn">
+                        🔄 Reset Cash Flow
+                    </button>
+                </div>
+
+            </div>
+
+
+            <!-- STATUS -->
+            <div class="status-grid">
+
+                <div class="status-card">
+                    <span>Opening Cash</span>
+                    <strong id="statusOpening">₹0.00</strong>
+                </div>
+
+                <div class="status-card">
+                    <span>Cash In</span>
+                    <strong id="statusIn">₹0.00</strong>
+                </div>
+
+                <div class="status-card">
+                    <span>Cash Out</span>
+                    <strong id="statusOut">₹0.00</strong>
+                </div>
+
+                <div class="status-card">
+                    <span>Expected Cash</span>
+                    <strong id="statusExpected">₹0.00</strong>
+                </div>
+
+                <div class="status-card">
+                    <span>Actual Cash</span>
+                    <strong id="statusActual">₹0.00</strong>
+                </div>
+
+                <div class="status-card">
+                    <span>Difference</span>
+                    <strong id="statusDifference">₹0.00</strong>
+                </div>
+
+            </div>
+
+
+            <!-- CASH SUMMARY -->
+            <div class="card">
+
+                <div class="card-header">
+                    <div>
+                        <h2>💰 Cash Summary</h2>
+                        <p>Current counted cash</p>
+                    </div>
+
+                    <div class="button-row">
+                        <button class="primary-btn" id="openCounterBtn">
+                            Open Counter
+                        </button>
+
+                        <button class="danger-btn" id="dashboardResetBtn">
+                            🔄 Reset Cash
+                        </button>
+                    </div>
+                </div>
+
+                <div class="summary-grid">
+
+                    <div>
+                        <span>Notes</span>
+                        <strong id="summaryNotes">₹0.00</strong>
+                    </div>
+
+                    <div>
+                        <span>Coins</span>
+                        <strong id="summaryCoins">₹0.00</strong>
+                    </div>
+
+                    <div>
+                        <span>Total Items</span>
+                        <strong id="grandItems">0</strong>
+                    </div>
+
+                    <div>
+                        <span>Total Cash</span>
+                        <strong id="summaryTotal">₹0.00</strong>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= COUNTER ================= -->
+        <section id="counter" class="page-section">
+
+            <div class="card">
+
+                <div class="card-header">
+                    <div>
+                        <h2>💰 Cash Counter</h2>
+                        <p>Notes and coins in one place</p>
+                    </div>
+
+                    <button class="danger-btn" id="resetCounterBtn">
+                        🔄 Reset Counter
+                    </button>
+                </div>
+
+                <div class="table-wrapper">
+
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Type</th>
+                                <th>Denomination</th>
+                                <th>Quantity</th>
+                                <th>Amount</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="cashTable"></tbody>
+                    </table>
+
+                </div>
+
+                <div class="grand-total">
+                    <span>Total Cash</span>
+                    <strong id="grandTotal">₹0.00</strong>
+                </div>
+
+            </div>
+
+
+            <!-- ACTUAL CASH -->
+            <div class="card">
+
+                <div class="card-header">
+                    <div>
+                        <h2>🔎 Cash Verification</h2>
+                        <p>Compare actual cash with expected cash</p>
+                    </div>
+                </div>
+
+                <div class="verification-grid">
+
+                    <div class="verify-box">
+                        <span>Expected Cash</span>
+                        <strong id="counterExpected">₹0.00</strong>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Actual Cash</label>
+                        <input
+                            type="number"
+                            id="actualCash"
+                            min="0"
+                            placeholder="Enter actual cash"
+                        >
+                    </div>
+
+                    <div class="verify-box">
+                        <span>Difference</span>
+                        <strong id="counterDifference">₹0.00</strong>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= TRANSACTIONS ================= -->
+        <section id="transactions" class="page-section">
+
+            <div class="card">
+
+                <div class="card-header">
+                    <div>
+                        <h2>📋 Transactions</h2>
+                        <p>View all cash transactions</p>
+                    </div>
+
+                    <button class="danger-btn" id="clearTransactionsBtn">
+                        🗑 Clear All
+                    </button>
+                </div>
+
+                <div class="filter-row">
+
+                    <input
+                        type="text"
+                        id="searchTransaction"
+                        placeholder="🔍 Search transaction..."
+                    >
+
+                    <select id="transactionFilter">
+                        <option value="all">All Transactions</option>
+                        <option value="in">Cash In</option>
+                        <option value="out">Cash Out</option>
+                    </select>
+
+                </div>
+
+                <div id="transactionList" class="transaction-list">
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= REPORTS ================= -->
+        <section id="reports" class="page-section">
+
+            <div class="report-grid">
+
+                <div class="report-card">
+                    <span>Opening Cash</span>
+                    <strong id="reportOpening">₹0.00</strong>
+                </div>
+
+                <div class="report-card">
+                    <span>Total Cash In</span>
+                    <strong id="reportIn">₹0.00</strong>
+                </div>
+
+                <div class="report-card">
+                    <span>Total Cash Out</span>
+                    <strong id="reportOut">₹0.00</strong>
+                </div>
+
+                <div class="report-card">
+                    <span>Expected Cash</span>
+                    <strong id="reportExpected">₹0.00</strong>
+                </div>
+
+                <div class="report-card">
+                    <span>Actual Cash</span>
+                    <strong id="reportActual">₹0.00</strong>
+                </div>
+
+                <div class="report-card">
+                    <span>Difference</span>
+                    <strong id="reportDifference">₹0.00</strong>
+                </div>
+
+            </div>
+
+
+            <div class="card">
+
+                <div class="card-header">
+                    <div>
+                        <h2>📊 Denomination Breakdown</h2>
+                        <p>Complete cash counting report</p>
+                    </div>
+                </div>
+
+                <div class="table-wrapper">
+
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Type</th>
+                                <th>Denomination</th>
+                                <th>Quantity</th>
+                                <th>Amount</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="reportBreakdown"></tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
